@@ -11,6 +11,7 @@ public class Student {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	private String firstName, lastName, email;
+	
 	public long getId() {
 		return id;
 	}

@@ -1,6 +1,5 @@
 package com.example.jwt.service;
 
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,18 +12,17 @@ import java.util.Date;
 import static java.util.Collections.emptyList;
 
 public class TokenAuthenticationService {
-  static final long EXPIRATIONTIME = 864_000_000; // 10 days
+  static final long EXPIRATIONTIME = 864_000_00; // 1 day in milliseconds
   static final String SECRET = "ThisIsASecret";
   static final String TOKEN_PREFIX = "Bearer";
   static final String HEADER_STRING = "Authorization";
 
   static public void addAuthentication(HttpServletResponse res, String username) {
-    String JWT = Jwts.builder()
-        .setSubject(username)
+    String JwtToken = Jwts.builder().setSubject(username)
         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
         .signWith(SignatureAlgorithm.HS512, SECRET)
         .compact();
-    res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
+    res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JwtToken);
 	res.addHeader("Access-Control-Expose-Headers", "Authorization");
   }
 
